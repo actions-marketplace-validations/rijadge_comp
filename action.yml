@@ -55,12 +55,14 @@ runs:
     uses: rijadge/analyzer@v1.0
     with:
       directoryToSearch: ${{ inputs.directoryToSearch }}
+      openApiDirectoryName: ${{ inputs.pathHead }}
       
   - name: Run code analysis for base
     id: base-analysis
     uses: rijadge/analyzer@v1.0
     with:
       directoryToSearch: ${{ inputs.directoryToSearch }}
+      openApiDirectoryName: ${{ inputs.baseHead }}
       
   - name: "Paths"
     shell: bash
