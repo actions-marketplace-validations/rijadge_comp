@@ -60,7 +60,7 @@ runs:
     id: base-analysis
     uses: rijadge/analyzer@v1.1
     with:
-      directoryToSearch: ${{ inputs.baseHead }}
+      directoryToSearch: ${{ inputs.pathBase }}
       
   - name: "Paths"
     shell: bash
@@ -71,8 +71,8 @@ runs:
     id: diff-state
     uses: swimmwatch/openapi-diff-action@v1.0.1
     with:
-      old-spec: ${{ steps.base-analysis.outputs.state }}
-      new-spec: ${{ steps.head-analysis.outputs.state }}
+      old-spec: ${{ steps.base-analysis.outputs.specPath }}
+      new-spec: ${{ steps.head-analysis.outputs.specPath }}
       json: "out.json"
       markdown: "out.md"
   - name: "Print difference in case of changes"
