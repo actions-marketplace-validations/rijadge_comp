@@ -1,5 +1,5 @@
 name: '.NET Core Web Api breaking changes notifier.'
-description: 'Finds the differences between two different .NET Core Web APIs and notifies the services that rely on it for possible breaking changes. '
+description: 'Notifies services that rely on this web api for breaking changes. '
 branding:
   icon: bell
   color: purple
