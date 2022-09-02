@@ -52,13 +52,13 @@ runs:
       
   - name: Run code analysis for head
     id: head-analysis
-    uses: rijadge/analyzer@v1.0
+    uses: rijadge/analyzer@v1.1
     with:
       directoryToSearch: ${{ inputs.pathHead }}
       
   - name: Run code analysis for base
     id: base-analysis
-    uses: rijadge/analyzer@v1.0
+    uses: rijadge/analyzer@v1.1
     with:
       directoryToSearch: ${{ inputs.baseHead }}
       
