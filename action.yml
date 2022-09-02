@@ -1,0 +1,86 @@
+name: '.NET Core Web Api breaking changes notifier.'
+description: 'Finds the differences between two different .NET Core Web APIs and notifies the services that rely on it for possible breaking changes. '
+branding:
+  icon: bell
+  color: purple
+
+inputs:
+  directoryToSearch:
+    description:
+      'The root directory to start work from. Examples, "path/to/code".'
+    required: true # maybe this can be github.workspace (starts from outer doc.)
+
+  pathHead:
+    description:
+      'Path where to save the latest commit repository.'
+    required: false
+    default: "head"
+    
+  pathBase:
+    description:
+      'Path where to save the previous commit repository.'
+    required: false
+    default: "base"
+    
+  githubAfterEvent:
+    description:
+      'Commit that triggered the workflow.' # ${{ github.event.after }}
+    required: true
+    
+  githubBeforeEvent:
+    description:
+      'Commit before the last one.'  # ${{ github.event.before }}
+    required: true
+    
+  token:
+    description:
+      'Token.' # secrets.TOKEN or github.token, currently not needed!
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+  - uses: actions/checkout@v2
+    with:
+      ref: ${{ inputs.githubAfterEvent }} # new commit
+      path: ${{ inputs.pathHead }} # path to save the repo
+  - uses: actions/checkout@v2
+    with:
+      fetch-depth: 2 # fetch the last 2 commits
+      ref: ${{ inputs.githubBeforeEvent }} # previous commit
+      path: ${{ inputs.pathBase }} # path to save the repo
+      
+  - name: Run code analysis for head
+    id: head-analysis
+    uses: rijadge/analyzer@v1.0
+    with:
+      directoryToSearch: ${{ inputs.directoryToSearch }}
+      
+  - name: Run code analysis for base
+    id: base-analysis
+    uses: rijadge/analyzer@v1.0
+    with:
+      directoryToSearch: ${{ inputs.directoryToSearch }}
+      
+  - name: "Paths"
+    shell: bash
+    run: echo ${{ steps.head-analysis.outputs.specPath }}
+      echo ${{ steps.base-analysis.outputs.specPath }}
+    
+  - name: Find difference between OpenAPI specifications
+    id: diff-state
+    uses: swimmwatch/openapi-diff-action@v1.0.1
+    with:
+      old-spec: ${{ steps.base-analysis.outputs.state }}
+      new-spec: ${{ steps.head-analysis.outputs.state }}
+      json: "out.json"
+      markdown: "out.md"
+  - name: "Print difference in case of changes"
+    if: ${{ steps.diff-state.outputs.state != 'no_changes' }}
+    shell: bash
+    run: echo ${{ steps.diff-state.outputs.state }}
+  - name: "Print no changes message"
+    if: ${{ steps.diff-state.outputs.state == 'no_changes' }}
+    shell: bash
+    run: "No changes were found!"
+    shell: bash
