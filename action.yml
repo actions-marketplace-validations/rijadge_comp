@@ -14,13 +14,13 @@ inputs:
     description:
       'Path where to save the latest commit repository.'
     required: false
-    default: "head"
+    default: "./head"
     
   pathBase:
     description:
       'Path where to save the previous commit repository.'
     required: false
-    default: "base"
+    default: "./base"
     
   githubAfterEvent:
     description:
@@ -64,8 +64,10 @@ runs:
       
   - name: "Paths"
     shell: bash
-    run: echo ${{ steps.head-analysis.outputs.specPath }}
+    run: | 
+      echo ${{ steps.head-analysis.outputs.specPath }}
       echo ${{ steps.base-analysis.outputs.specPath }}
+      echo "ASDASDADADADADADASDASD"
     
   - name: Find difference between OpenAPI specifications
     id: diff-state
