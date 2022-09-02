@@ -83,4 +83,3 @@ runs:
     if: ${{ steps.diff-state.outputs.state == 'no_changes' }}
     shell: bash
     run: "No changes were found!"
-    shell: bash
