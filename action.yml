@@ -52,29 +52,29 @@ runs:
       
   - name: Run code analysis for head
     id: head-analysis
-    uses: rijadge/analyzer@v1.1
+    uses: rijadge/analyzer@v1.2
     with:
       directoryToSearch: ${{ inputs.pathHead }}
       
   - name: Run code analysis for base
     id: base-analysis
-    uses: rijadge/analyzer@v1.1
+    uses: rijadge/analyzer@v1.2
     with:
       directoryToSearch: ${{ inputs.pathBase }}
       
   - name: "Paths"
     shell: bash
     run: | 
-      echo ${{ steps.head-analysis.outputs.specPath }}
-      echo ${{ steps.base-analysis.outputs.specPath }}
+      echo '${{ steps.head-analysis.outputs.spec }}'
+      echo '${{ steps.base-analysis.outputs.spec }}'
       echo "ASDASDADADADADADASDASD"
     
   - name: Find difference between OpenAPI specifications
     id: diff-state
     uses: swimmwatch/openapi-diff-action@v1.0.1
     with:
-      old-spec: ${{ steps.base-analysis.outputs.specPath }}
-      new-spec: ${{ steps.head-analysis.outputs.specPath }}
+      old-spec: ${{ steps.base-analysis.outputs.spec }}
+      new-spec: ${{ steps.head-analysis.outputs.spec }}
       json: "out.json"
       markdown: "out.md"
   - name: "Print difference in case of changes"
