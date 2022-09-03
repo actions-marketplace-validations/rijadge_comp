@@ -62,13 +62,12 @@ runs:
     with:
       directoryToSearch: ${{ inputs.pathBase }}
       
-  - name: "Paths"
+  - name: "Show Paths"
     shell: bash
     run: | 
       echo '${{ steps.head-analysis.outputs.specPath }}'
       echo '${{ steps.base-analysis.outputs.specPath }}'
-      echo "ASDASDADADADADADASDASD"
-    
+      
   - name: Find difference between OpenAPI specifications
     id: diff-state
     uses: swimmwatch/openapi-diff-action@v1.0.1
