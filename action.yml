@@ -92,12 +92,12 @@ runs:
     run: |
       curl --request POST \
       --url https://notifier20220911154441.azurewebsites.net/api/notify \
-      --header 'content-type: application/json' \
+      --header 'Content-Type: application/json' \
       --data '{
-        "Token": ${{ inputs.token }},
-        "Repository": ${{ github.repository }},
-        "Branch": ${{ github.ref_name }},
+        "Token": "${{ inputs.token }}",
+        "Repository": "${{ github.repository }}",
+        "Branch": "${{ github.ref_name }}",
         "Title": "Automated email for breaking changes in ${{ github.repository }} repository with branch name ${{ github.ref_name }}",
         "Header": "This email was automatically sent by the GitHub Action workflow **${{ github.workflow }}**. \n\n The commit hash was: _${{ github.sha }}_.",
-        "ApiChanges": ${{ steps.diff-state.outputs.state }}
+        "ApiChanges": "${{ steps.diff-state.outputs.state }}"
         }' \
