@@ -90,7 +90,7 @@ runs:
     if: ${{ steps.diff-state.outputs.state != 'no_changes' }}
     shell: bash
     run: |
-      curl --request GET \
+      curl --request POST \
       --url https://notifier20220911154441.azurewebsites.net/api/notify \
       --header 'content-type: application/json' \
       --data '{
