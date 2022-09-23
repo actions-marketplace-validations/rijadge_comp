@@ -52,14 +52,14 @@ runs:
       
   - name: Run code analysis for head
     id: head-analysis
-    uses: rijadge/analyzer@v1.5
+    uses: rijadge/analyzer@v1.6
     with:
       directoryToSearch: ${{ inputs.pathHead }}
       token: ${{ inputs.token }}
       
   - name: Run code analysis for base
     id: base-analysis
-    uses: rijadge/analyzer@v1.5
+    uses: rijadge/analyzer@v1.6
     with:
       directoryToSearch: ${{ inputs.pathBase }}
       token: ${{ inputs.token }}
