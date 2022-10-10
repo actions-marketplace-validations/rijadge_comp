@@ -78,6 +78,7 @@ runs:
       new-spec: ${{ steps.head-analysis.outputs.specPath }}
       json: "out.json"
       markdown: "out.md"
+      html: "changes.html"
   - name: "Print difference in case of changes"
     if: ${{ steps.diff-state.outputs.state != 'no_changes' }}
     shell: bash
@@ -100,4 +101,5 @@ runs:
         "Title": "Automated email for breaking changes in ${{ github.repository }} repository with branch name ${{ github.ref_name }}",
         "Header": "This email was automatically sent by the GitHub Action workflow **${{ github.workflow }}**. \n\n The commit hash was: _${{ github.sha }}_.",
         "ApiChanges": "${{ steps.diff-state.outputs.state }}"
+        "File": @changes.html
         }' \
