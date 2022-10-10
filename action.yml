@@ -87,6 +87,9 @@ runs:
     if: ${{ steps.diff-state.outputs.state == 'no_changes' }}
     shell: bash
     run: echo "No changes were found!"
+    - name: "Send differences to subscribers"
+    shell: bash
+    run: ls
   - name: "Send differences to subscribers"
     if: ${{ steps.diff-state.outputs.state != 'no_changes' }}
     shell: bash
