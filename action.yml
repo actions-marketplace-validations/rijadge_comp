@@ -105,4 +105,3 @@ runs:
         "Header": "This email was automatically sent by the GitHub Action workflow **${{ github.workflow }}**. \n\n The commit hash was: _${{ github.sha }}_.",
         "ApiChanges": "${{ steps.diff-state.outputs.state }}"
         }' \
-      --data "file=@changes.html"\
