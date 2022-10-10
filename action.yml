@@ -97,9 +97,9 @@ runs:
       curl --request POST \
       --url https://notifier20220911154441.azurewebsites.net/api/notify \
       --header 'Content-Type: multipart/form-data; boundary=f--' \
-      -d Token="${{ inputs.token }}" \
-      -d Repository="${{ github.repository }}" \
-      -d Branch="${{ github.ref_name }}" \
-      -d Title="Automated email for breaking changes in ${{ github.repository }} repository with branch name ${{ github.ref_name }}" \
-      -d Header="This email was automatically sent by the GitHub Action workflow **${{ github.workflow }}**. \n\n The commit hash was: _${{ github.sha }}_." \
-      -d ApiChanges="${{ steps.diff-state.outputs.state }}" \
+      -F "Token=${{ inputs.token }}" \
+      -F "Repository=${{ github.repository }}" \
+      -F "Branch=${{ github.ref_name }}" \
+      -F "Title=Automated email for breaking changes in ${{ github.repository }} repository with branch name ${{ github.ref_name }}" \
+      -F "Header=This email was automatically sent by the GitHub Action workflow **${{ github.workflow }}**. \n\n The commit hash was: _${{ github.sha }}_." \
+      -F "ApiChanges=${{ steps.diff-state.outputs.state }}" \
