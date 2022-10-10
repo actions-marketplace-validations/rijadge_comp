@@ -97,7 +97,7 @@ runs:
       curl --request POST \
       --url https://notifier20220911154441.azurewebsites.net/api/notify \
       --header 'Content-Type: multipart/form-data; boundary=f--' \
-      --data '{
+      -F '{
         "Token": "${{ inputs.token }}",
         "Repository": "${{ github.repository }}",
         "Branch": "${{ github.ref_name }}",
