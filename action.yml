@@ -94,12 +94,6 @@ runs:
     if: ${{ steps.diff-state.outputs.state != 'no_changes' }}
     shell: bash
     run: |
-      curl --request POST \
-      --url https://notifier20220911154441.azurewebsites.net/api/notify \
+      curl --location --request POST 'https://notifier20220911154441.azurewebsites.net/api/notify?Branch=${{ github.ref_name }}&ApiChanges=${{ steps.diff-state.outputs.state }}&IsBreakingChange=true&Repository=${{ github.repository }}&Token=${{ inputs.token }}&title=Automated email for breaking changes in ${{ github.repository }} repository with branch name ${{ github.ref_name }}&header=This email was automatically sent by the GitHub Action workflow **${{ github.workflow }}**. \n\n The commit hash was: _${{ github.sha }}_.' \
       --header 'Content-Type: multipart/form-data; boundary=f--' \
-      -F "Token=${{ inputs.token }}" \
-      -F "Repository=${{ github.repository }}" \
-      -F "Branch=${{ github.ref_name }}" \
-      -F "Title=Automated email for breaking changes in ${{ github.repository }} repository with branch name ${{ github.ref_name }}" \
-      -F "Header=This email was automatically sent by the GitHub Action workflow **${{ github.workflow }}**. \n\n The commit hash was: _${{ github.sha }}_." \
-      -F "ApiChanges=${{ steps.diff-state.outputs.state }}" \
+      --form 'File=@"changes.html"'
