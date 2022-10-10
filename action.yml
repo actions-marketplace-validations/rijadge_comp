@@ -95,5 +95,5 @@ runs:
     shell: bash
     run: |
       curl --location --request POST 'https://notifier20220911154441.azurewebsites.net/api/notify?Branch=${{ github.ref_name }}&ApiChanges=${{ steps.diff-state.outputs.state }}&IsBreakingChange=true&Repository=${{ github.repository }}&Token=${{ inputs.token }}&title=automated&header=This' \
-      --header 'Content-Type: multipart/form-data; boundary=f--' \
-      --form 'File=@"changes.html"'
+      --header 'Content-Type: multipart/form-data' \
+      --form File=@changes.html
