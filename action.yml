@@ -97,7 +97,7 @@ runs:
       curl --request POST \
       --url https://notifier20220911154441.azurewebsites.net/api/notify \
       --header 'Content-Type: multipart/form-data; boundary=f--' \
-      -F '{
+      --data '{
         "Token": "${{ inputs.token }}",
         "Repository": "${{ github.repository }}",
         "Branch": "${{ github.ref_name }}",
@@ -105,4 +105,4 @@ runs:
         "Header": "This email was automatically sent by the GitHub Action workflow **${{ github.workflow }}**. \n\n The commit hash was: _${{ github.sha }}_.",
         "ApiChanges": "${{ steps.diff-state.outputs.state }}"
         }' \
-      -F "file=@changes.html"\
+      --data "file=@changes.html"\
